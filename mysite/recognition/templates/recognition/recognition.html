@@ -1,0 +1,14 @@
+<h1>Распознавание объектов на изображинии</h1>
+
+<form enctype="multipart/form-data" action="{% url 'recognition' %}" method="POST">
+    {% csrf_token %}
+<!--    {{ form.as_p }}-->
+<!--    <img src="{{ photo_url }}" alt="" width="350">-->
+    <input type="file" name="document">
+    <img src="{{ uploaded_file }}" alt="" width="1000">
+    <button type="submit" class="btn btn-primary btn-block">Распознать объекты</button>
+</form>
+<!--<form enctype="multipart/form-data" method="post" action="/foo/">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form }}-->
+<!--</form>-->
