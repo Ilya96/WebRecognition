@@ -22,25 +22,15 @@ args = Args(
 
 def recognition(request):
     if request.method == 'POST':
-        # form = RecognitionForm(request.POST, request.FILES)
-        # if form.is_valid():
-            # print(form.cleaned_data)
-            # News.objects.create(**form.cleaned_data)
-
-            # file_data = {'mugshot': SimpleUploadedFile('dog.jpg', 'media/')}
-            # f = RecognitionForm({'form': form, 'photo_url': 'media/object-detection.jpg'}, file_data)
-            # content = {'form': form, 'photo_url': 'media/object-detection.jpg'}
-            uploaded_file = request.FILES.get('document')
-            if not uploaded_file:
-                return render(request, 'recognition/recognition_get.html')
-            else:
-                print(uploaded_file.size)
-                print(uploaded_file.name)
-                recognition_image('media/'+uploaded_file.name)
-                path = uploaded_file.name
-                return render(request, 'recognition/recognition.html', {'uploaded_file': "media/" + uploaded_file.name.split('.')[0] + "detection.jpg"})#redirect('home')
+        uploaded_file = request.FILES.get('document')
+        if not uploaded_file:
+            return render(request, 'recognition/recognition_get.html')
+        else:
+            print(uploaded_file.size)
+            print(uploaded_file.name)
+            recognition_image('media/'+uploaded_file.name)
+            return render(request, 'recognition/recognition.html', {'uploaded_file': "media/" + uploaded_file.name.split('.')[0] + "detection.jpg"})
     else:
-        # form = RecognitionForm()
         return render(request, 'recognition/recognition_get.html')
 
 

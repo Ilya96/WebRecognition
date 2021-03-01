@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h1>Распознавание объектов на изображинии</h1>
 
-</body>
-</html>z
+<form enctype="multipart/form-data" action="{% url 'recognition' %}" method="POST">
+    {% csrf_token %}
+    <input type="file" name="document">
+     {% block image %}{% endblock %}
+    <button type="submit" class="btn btn-primary btn-block">Распознать объекты</button>
+</form>
