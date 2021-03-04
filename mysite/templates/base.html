@@ -2,7 +2,7 @@
 
 <form enctype="multipart/form-data" action="{% url 'recognition' %}" method="POST">
     {% csrf_token %}
-    <input type="file" name="document">
+    <input type="file" accept="image/*" name="document">
      {% block image %}{% endblock %}
     <button type="submit" class="btn btn-primary btn-block">Распознать объекты</button>
 </form>
