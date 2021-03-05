@@ -28,7 +28,8 @@ def recognition(request):
         if not uploaded_file:
             return render(request, 'recognition/recognition_get.html')
         else:
-            filename = fs.save(uploaded_file.name, uploaded_file)
+            if not fs.exists(uploaded_file.name):
+                fs.save(uploaded_file.name, uploaded_file)
             # uploaded_file_url = fs.url(filename)
             # print(uploaded_file_url)
             # print(uploaded_file.size)
@@ -48,7 +49,7 @@ def recognition_image(uploaded_file_name):
 
         return output_layers
 
-    def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
+    def draw_prediction(img, class_id, x, y, x_plus_w, y_plus_h):
         label = str(classes[class_id])
 
         color = COLORS[class_id]
@@ -56,7 +57,6 @@ def recognition_image(uploaded_file_name):
         cv2.rectangle(img, (x, y), (x_plus_w, y_plus_h), color, 2)
 
         cv2.putText(img, label, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-
 
     image = cv2.imread(uploaded_file_name)
     Width = image.shape[1]
@@ -109,7 +109,7 @@ def recognition_image(uploaded_file_name):
         y = box[1]
         w = box[2]
         h = box[3]
-        draw_prediction(image, class_ids[i], confidences[i], round(x), round(y), round(x + w), round(y + h))
+        draw_prediction(image, class_ids[i], round(x), round(y), round(x + w), round(y + h))
 
     cv2.imwrite(uploaded_file_name.split('.')[0] + "detection.jpg", image)
     cv2.destroyAllWindows()
