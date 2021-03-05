@@ -19,6 +19,8 @@ args = Args(
     config='yolov3.cfg'
 )
 
+fs = FileSystemStorage()
+
 
 def recognition(request):
     if request.method == 'POST':
@@ -26,8 +28,11 @@ def recognition(request):
         if not uploaded_file:
             return render(request, 'recognition/recognition_get.html')
         else:
-            print(uploaded_file.size)
-            print(uploaded_file.name)
+            filename = fs.save(uploaded_file.name, uploaded_file)
+            # uploaded_file_url = fs.url(filename)
+            # print(uploaded_file_url)
+            # print(uploaded_file.size)
+            # print(uploaded_file.name)
             recognition_image('media/'+uploaded_file.name)
             return render(request, 'recognition/recognition.html', {'uploaded_file': "media/" + uploaded_file.name.split('.')[0] + "detection.jpg"})
     else:
